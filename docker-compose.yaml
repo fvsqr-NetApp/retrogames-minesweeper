@@ -1,5 +1,6 @@
 services:
   mines:
+    image: quay.io/str_netappontour/mines:latest
     build:
       context: .
     container_name: mines
