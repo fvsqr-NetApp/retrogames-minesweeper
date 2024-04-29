@@ -122,9 +122,18 @@ socket.on('board', function (board_data) {
 
   var adjustBoardSizeToFit = function () {
     var smallestSideLength = Math.min($(window).height(), $(window).width());
-    var squareSize = (smallestSideLength - 80) / Math.max(board_data.dimensions.width, board_data.dimensions.height);
+    var offset_landscape_mode = 80;
+    if ($(window).height() < $(window).width() + 100) {
+      offset_landscape_mode = 400;
+    }
+    var squareSize = (smallestSideLength - offset_landscape_mode) / Math.max(board_data.dimensions.width, board_data.dimensions.height);
     var marginSize = Math.max(1, Math.floor(squareSize / 50));
-    $('#board').css('width', (squareSize + (marginSize * 2)) * board_data.dimensions.width);
+    
+    var board_margin = 0;
+    if ($(window).height() < $(window).width() + 100) {
+      board_margin = 200
+    }
+    $('#board').css('width', (squareSize + (marginSize * 2)) * board_data.dimensions.width) - board_margin;
     $('.square').css('width', squareSize);
     $('.square').css('height', squareSize);
     $('.square').css('borderRadius', squareSize / 10);
@@ -176,7 +185,8 @@ socket.on('next dimensions', function (dimensions) {
 });
 
 var updateColor = function () {
-  $('#username').text(username).css('font-weight', 600).css('color', color);
+  var user = username.split('-').splice(0, 2).map((n) => n[0].toUpperCase() + n.slice(1)).join(' '); 
+  $('#username').text(user).css('font-weight', 600).css('color', color);
 };
 
 var isCurrentlyRevealMode = function () {
