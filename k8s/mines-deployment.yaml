@@ -33,8 +33,6 @@ spec:
           volumeMounts:
             - mountPath: /mines/css
               name: mines-cm0
-            - mountPath: /to_encrypt
-              name: mines-cm1
       restartPolicy: Always
       volumes:
         - configMap:
