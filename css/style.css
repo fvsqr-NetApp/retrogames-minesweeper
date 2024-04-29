@@ -18,3 +18,7 @@
 	cursor: default;
 	transition: border-color 0.4s ease, background-color 0.4s ease;
 }
+
+#username {
+	text-align: center;
+}
