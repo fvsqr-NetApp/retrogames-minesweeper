@@ -1,0 +1,12 @@
+services:
+  mines:
+    build:
+      context: .
+    container_name: mines
+    restart: unless-stopped
+    volumes:
+      - './css:/mines/css'
+      - './to_encrypt:/to_encrypt'
+    ports:
+      - 8080:8080
+ 
