@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.33.0 (HEAD)
+  labels:
+    io.kompose.service: mines
+  name: mines
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: mines
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.33.0 (HEAD)
+      labels:
+        io.kompose.network/mines-default: "true"
+        io.kompose.service: mines
+    spec:
+      containers:
+        - image: mines
+          name: mines
+          ports:
+            - containerPort: 8080
+              hostPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /mines/css
+              name: mines-cm0
+            - mountPath: /to_encrypt
+              name: mines-cm1
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            name: mines-cm0
+          name: mines-cm0
