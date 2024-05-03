@@ -33,8 +33,13 @@ spec:
           volumeMounts:
             - mountPath: /mines/css
               name: mines-cm0
+            - mountPath: /quotes
+              name: quotes-volume
       restartPolicy: Always
       volumes:
         - configMap:
             name: mines-cm0
           name: mines-cm0
+        - name: quotes-volume
+          persistentVolumeClaim:
+            claimName: quotes-claim
