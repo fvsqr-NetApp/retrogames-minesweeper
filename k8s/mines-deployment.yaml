@@ -33,7 +33,7 @@ spec:
           volumeMounts:
             - mountPath: /mines/css
               name: mines-cm0
-            - mountPath: /quotes
+            - mountPath: /to_encrypt
               name: quotes-volume
       restartPolicy: Always
       volumes:
