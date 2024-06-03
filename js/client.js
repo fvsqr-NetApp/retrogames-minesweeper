@@ -24,6 +24,18 @@ var register = function () {
     sealedUsername: Cookies.get('username'),
     gameId: getGameId()
   });
+
+  $(function() {
+    loadAds();
+
+    function loadAds() {
+       setTimeout(loadAds,2500);
+       $.get( "/quotes", function( data ) {
+        console.log(data);
+        $( "#ads" ).html( data );
+      });
+    }
+  });
 };
 
 var shuffle = function (array) {
