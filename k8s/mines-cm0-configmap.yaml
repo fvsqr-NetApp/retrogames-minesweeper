@@ -26,13 +26,13 @@ data:
     	text-align: center;
     }
 
-		#ads {
-			text-align: center;
-			border: 1px solid blue;
-			font-size: 22px;
-			padding: 5px;
-			margin: 5px;
-		}
+    #ads {
+      text-align: center;
+      border: 1px solid blue;
+      font-size: 22px;
+      padding: 5px;
+      margin: 5px;
+    }
 kind: ConfigMap
 metadata:
   labels:
