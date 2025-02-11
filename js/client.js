@@ -378,3 +378,27 @@ $(function () {
   updateSettingsModal();
   M.updateTextFields();
 });
+
+var makeRevealActive = function () {
+  var element = document.getElementById('revealMode');
+  element.click()
+  element.classList.toggle('inactive', true);
+  document.querySelector('.btn-revealorflagt').classList.add('active');
+};
+
+var makeFlagActive = function () {
+  document.getElementById('flagMode').click()
+  var element = document.getElementById('flagMode');
+  element.click()
+  element.classList.toggle('inactive', true);
+};
+
+var toggleRevealOrFlagActive = function () {
+  const buttons = document.querySelectorAll('.btn-revealorflag');
+  buttons.forEach(button => {
+    button.classList.toggle('inactive');
+  });
+
+  const [first, second] = document.querySelectorAll('input[type="radio"][name="mode"]');
+  first.checked ? second.checked = true : first.checked = true;
+};

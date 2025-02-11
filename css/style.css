@@ -6,7 +6,7 @@
 .square {
 	width: 50px;
 	height: 50px;
-	background-color: #aaaaaa;
+	background-color: #bbb;
 	border: 1px solid white;
 	border-radius: 5px;
 	display: block;
@@ -17,16 +17,120 @@
 	margin: 1px;
 	cursor: default;
 	transition: border-color 0.4s ease, background-color 0.4s ease;
+	color: #333;
 }
 
 #username {
 	text-align: center;
 }
 
-#ads {
+#ads2 {
 	text-align: center;
 	border: 1px solid blue;
 	font-size: 22px;
 	padding: 5px;
 	margin: 5px;
 }
+
+#ads {
+	text-shadow: 2px 2px 0 var(--clr-accent-400),
+		4px 4px 0 var(--clr-secondary-400), 6px 6px 0 var(--clr-primary-400);
+}
+
+.buttons {
+	text-align: center;
+}
+
+.btn-revealorflag {
+	display: inline-block;
+	cursor: pointer;
+	font: inherit;
+	font-weight: 700;
+	color: var(--clr-primary-500);
+	text-decoration: none;
+	background: white;
+	padding: 0.75em 2.5em;
+
+	border: 4px solid transparent;
+	outline: 3px solid currentColor;
+	outline-offset: -6px;
+
+	transition: 500ms;
+	margin: 10px;
+}
+
+.btn-revealorflag.inactive {
+	background: #aaa;
+	pointer-events: none;
+    cursor: default;
+    opacity: 0.6;
+}
+
+.btn-revealorflag:hover,
+.btn-revealorflag:focus {
+	color: white;
+	outline-offset: 0px;
+	background: var(--clr-primary-400);
+	border-color: var(--clr-primary-300);
+}
+
+label.cb-revealorflag {
+	display: none;
+}
+
+
+/* general styling */
+
+:root {
+	--font-family: system-ui;
+  
+	--fs-300: clamp(0.94rem, calc(0.92rem + 0.08vw), 0.98rem);
+	--fs-400: clamp(1.13rem, calc(1.06rem + 0.33vw), 1.31rem);
+	--fs-500: clamp(1.35rem, calc(1.21rem + 0.69vw), 1.75rem);
+	--fs-600: clamp(1.62rem, calc(1.37rem + 1.24vw), 2.33rem);
+	--fs-700: clamp(1.94rem, calc(1.54rem + 2.03vw), 3.11rem);
+	--fs-800: clamp(2.33rem, calc(1.7rem + 3.15vw), 4.14rem);
+	--fs-900: clamp(2.8rem, calc(1.85rem + 4.74vw), 5.52rem);
+  
+	--clr-primary-300: hsl(219, 76%, 55%);
+	--clr-primary-400: hsl(219, 76%, 40%);
+	--clr-primary-500: hsl(219, 76%, 25%);
+	--clr-secondary-300: hsl(269, 75%, 55%);
+	--clr-secondary-400: hsl(269, 75%, 40%);
+	--clr-secondary-500: hsl(269, 75%, 25%);
+	--clr-accent-300: hsl(358, 72%, 65%);
+	--clr-accent-400: hsl(358, 72%, 50%);
+	--clr-accent-500: hsl(358, 72%, 35%);
+  }
+  
+  *,
+  *::before,
+  *::after {
+	box-sizing: border-box;
+  }
+  
+  html {
+	color-scheme: dark;
+  }
+  
+  body {
+	margin: 0;
+	color: #ddd;
+	font-family: var(--font-family);
+	font-size: var(--fs-400);
+	line-height: 1.6;
+	padding-block: 6rem;
+  }
+  
+  .ads-title {
+	color: white;
+	text-align: center;
+	font-size: var(--fs-700);
+	line-height: 1.05;
+	text-transform: uppercase;
+	font-weight: 900;
+  }
+
+  
+
+  

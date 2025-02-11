@@ -18,16 +18,19 @@ html
 	body
 		.row
 			h5#username Connecting...
-			h6#ads ---
+			h6#ads.ads-title Das ist ein Test
 			.row#boardRow
 				#board
 			.container
 				.row
-					label
+					.buttons
+						a.btn-revealorflag.inactive(href='#', onclick='toggleRevealOrFlagActive(); return false;') Reveal
+						a.btn-revealorflag(href='#', onclick='toggleRevealOrFlagActive(); return false;') Flag
+					label.cb-revealorflag
 						input.with-gap#revealMode(type='radio', name='mode', checked)
 						span Reveal
 					br
-					label
+					label.cb-revealorflag
 						input.with-gap#flagMode(type='radio', name='mode')
 						span Flag
 					br
