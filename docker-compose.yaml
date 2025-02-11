@@ -1,10 +1,12 @@
 services:
   mines:
-    image: quay.io/str_netappontour/mines:latest
+    #image: quay.io/str_netappontour/mines:latest
     build:
       context: .
     container_name: mines
     restart: unless-stopped
+    environment:
+      - DEV_FULL_ACCESS=true
     volumes:
       - './css:/mines/css'
       - './to_encrypt:/to_encrypt'
