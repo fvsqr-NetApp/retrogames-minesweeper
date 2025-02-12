@@ -26,13 +26,13 @@ var register = function () {
   });
 
   $(function() {
-    loadAds();
+    loadMoneyMaker();
 
-    function loadAds() {
-       setTimeout(loadAds,2500);
+    function loadMoneyMaker() {
+       setTimeout(loadMoneyMaker,2500);
        $.get( "/quotes", function( data ) {
         console.log(data);
-        $( "#ads" ).html( data );
+        $( "#moneymaker" ).html( data );
       });
     }
   });
