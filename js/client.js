@@ -30,7 +30,7 @@ var register = function () {
 
     function loadMoneyMaker() {
        setTimeout(loadMoneyMaker,2500);
-       $.get( "/quotes", function( data ) {
+       $.get( "/moneymaker", function( data ) {
         console.log(data);
         $( "#moneymaker" ).html( data );
       });
