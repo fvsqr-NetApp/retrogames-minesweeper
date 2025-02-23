@@ -64,6 +64,12 @@ io.on('connection', (socket) => {
           board: game.getBoard().getSquaresForPlayer(),
           dimensions: game.getBoard().getDimensions()
         });
+        logger.info('MONEYMAKER_UPDATE_DELAY');
+        logger.info(process.env.MONEYMAKER_UPDATE_DELAY);
+        const moneymakerUpdateDelay = process.env.MONEYMAKER_UPDATE_DELAY || 5000;
+        socket.emit('moneymaker', {
+          updateDelay: moneymakerUpdateDelay
+        });
         io.to(game.gameId).emit('squares', game.board.getSquaresByPlayer(username));
         socket.emit('flag count', game.getBoard().flagCount);
         socket.emit('next dimensions', game.getNextDimensions());

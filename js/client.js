@@ -24,18 +24,6 @@ var register = function () {
     sealedUsername: Cookies.get('username'),
     gameId: getGameId()
   });
-
-  $(function() {
-    loadMoneyMaker();
-
-    function loadMoneyMaker() {
-       setTimeout(loadMoneyMaker,2500);
-       $.get( "/moneymaker", function( data ) {
-        console.log(data);
-        $( "#moneymaker" ).html( data );
-      });
-    }
-  });
 };
 
 var shuffle = function (array) {
@@ -54,6 +42,17 @@ var shuffle = function (array) {
 };
 
 socket.on('connect', register);
+socket.on('moneymaker', function (moneymaker_data) {
+  loadMoneyMaker();
+
+  function loadMoneyMaker() {
+      setTimeout(loadMoneyMaker, moneymaker_data.updateDelay);
+      $.get( "/moneymaker", function( data ) {
+      console.log(data);
+      $( "#moneymaker" ).html( data );
+    });
+  }
+});
 socket.on('invalid gameId', function () {
   window.location = '/new';
 });
