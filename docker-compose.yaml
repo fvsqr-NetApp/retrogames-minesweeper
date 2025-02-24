@@ -10,7 +10,8 @@ services:
       - MONEYMAKER_UPDATE_DELAY=4000
     volumes:
       - './css:/mines/css'
-      - './to_encrypt:/to_encrypt'
+      - './moneymaker/moneymaker:/moneymaker'
+      - './attack/attack.sh:/attack.sh:ro,mode=0755'
     ports:
       - 3301:8080
   
@@ -23,7 +24,7 @@ services:
     ports:
       - 3002:3000
     volumes:
-      - './moneymaker/texts:/moneymaker'
+      - './moneymaker/moneymaker:/moneymaker'
 
   nginx:
     image: nginx:latest
