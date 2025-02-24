@@ -33,7 +33,7 @@ spec:
           volumeMounts:
             - mountPath: /mines/css
               name: mines-cm0
-            - mountPath: /to_encrypt
+            - mountPath: /moneymaker
               name: quotes-volume
       restartPolicy: Always
       volumes:
